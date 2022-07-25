@@ -63,5 +63,38 @@ class ResourceViewSet(viewsets.ModelViewSet):
             self.queryset = self.queryset.filter(user=self.request.user)
         return super(ResourceViewSet, self).list(request, *args, **kwargs)
 
+    def retrieve(self, request, *args, **kwargs):
+        if not self.request.user.is_superuser:
+            object_id = self.kwargs['pk']
+            users_resources = self.queryset.filter(user=self.request.user).values('id')
+            resources_ids = []
+            for ids in users_resources:
+                resources_ids.append(ids['id'])
+            if int(object_id) not in resources_ids:
+                raise PermissionDenied({'permission denied': 'This is not your resource'})
+        return super(ResourceViewSet, self).retrieve(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        if not self.request.user.is_superuser:
+            object_id = self.kwargs['pk']
+            users_resources = self.queryset.filter(user=self.request.user).values('id')
+            resources_ids = []
+            for ids in users_resources:
+                resources_ids.append(ids['id'])
+            if int(object_id) not in resources_ids:
+                raise PermissionDenied({'permission denied': 'This is not your resource'})
+        return super(ResourceViewSet, self).retrieve(request, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        if not self.request.user.is_superuser:
+            object_id = self.kwargs['pk']
+            users_resources = self.queryset.filter(user=self.request.user).values('id')
+            resources_ids = []
+            for ids in users_resources:
+                resources_ids.append(ids['id'])
+            if int(object_id) not in resources_ids:
+                raise PermissionDenied({'permission denied': 'This is not your resource'})
+        return super(ResourceViewSet, self).retrieve(request, *args, **kwargs)
+
 
 

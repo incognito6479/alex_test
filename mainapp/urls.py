@@ -10,7 +10,7 @@ router.register(r'resources', ResourceViewSet)
 
 
 urlpatterns = [
-    path('auth/', AuthView.as_view(), name="auth_api_view"),
+    path('auth/', AuthView.as_view(), name="auth_api_view")
 ]
 
 

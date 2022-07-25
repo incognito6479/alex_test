@@ -69,8 +69,7 @@ class Resources(models.Model):
 
     def save(self, **kwargs):
         slug_str = f"{self.title} {self.user.id}"
-        self.slug = unique_slugify(self, slug_str)
-        print(unique_slugify(self, slug_str))  # DO NOT REMOVE THIS PRINT statement otherwise slug will not work
+        unique_slugify(self, slug_str)
         super(Resources, self).save(**kwargs)
 
     class Meta:
